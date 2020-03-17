@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <title>Booking - Search Flight</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="container pt-5" style="padding-bottom: 14rem; width: 25%; float: left">
+                <div class="card search-card">
+                    <div class="card-body search-content ">
+                        <form action="#" th:action="@{/booking/order/ticket}" th:object="${bookingInfo}"
+                              method="post" id='form-flight-search'>             
+                            <h5>Contact Information:</h5>
+                            <div class="form-group row form-row border-dark">
+                                <div class="col-5 mb-1">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{contactFirstName}" placeholder="First name" required>
+                                </div>
+                                <div class="col-5 mb-1">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{contactLastName}" placeholder="Last name" required>
+                                </div>
+                                <div class="col-8 mb-1">
+                                    <input type="number" class="w-100 form-control-sm align-middle" th:field="*{contactPhoneNum}" placeholder="Phone Number" required>
+                                </div>
+                                <div class="col-8 mb-1">
+                                    <input type="email" class="w-100 form-control-sm align-middle" th:field="*{contactEmail}" placeholder="Email" required>
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control-sm align-middle w-100" th:field="*{contactAddress}" placeholder="Address" required>
+                                </div>
+                            </div>
+                            <h5>Customers Information:</h5>
+                            <!--                            <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.order?.tickets.?[ageRank==0]}">
+                                                            <label class="col-2 align-middle" th:text="${'Adult '+(ticketStat.index+1)}"></label>
+                                                            <div class="col-5">
+                                                                <input type="text" class="form-control-sm align-middle" th:field="*{order?.tickets[__${ticketStat.index}__].firstname}" placeholder="First name">
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <input type="text" class="form-control-sm align-middle" th:field="*{order.tickets[__${ticketStat.index}__].lastname}" placeholder="Last name">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.order?.tickets.?[ageRank==1]}">
+                                                            <label class="col-2 align-middle" th:text="${(bookingInfo?.order?.tickets[__${ticketStat.index + bookingInfo?.numOfAdult}__].ageRank==0?'Adult ':bookingInfo?.order?.tickets[__${ticketStat.index + bookingInfo?.numOfAdult}__].ageRank==1?'Child ':'Infant ')+(ticketStat.index+1)}"></label>
+                                                            <div class="col-5">
+                                                                <input type="text" class="form-control-sm align-middle" th:field="*{order.tickets[__${ticketStat.index + bookingInfo?.numOfAdult}__].firstname}" placeholder="First name">
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <input type="text" class="form-control-sm align-middle" th:field="*{order.tickets[__${ticketStat.index + bookingInfo?.numOfAdult}__].lastname}" placeholder="Last name">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.order?.tickets.?[ageRank==2]}">
+                                                            <label class="col-2 align-middle" th:text="${'Infant '+(ticketStat.index+1)}"></label>
+                                                            <div class="col-5">
+                                                                <input type="text" class="form-control-sm align-middle" th:field="*{order.tickets[__${ticketStat.index + bookingInfo?.numOfAdult + bookingInfo?.numOfChildren}__].firstname}" placeholder="First name">
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <input type="text" class="form-control-sm align-middle" th:field="*{order.tickets[__${ticketStat.index + bookingInfo?.numOfAdult + bookingInfo?.numOfChildren}__].lastname}" placeholder="Last name">
+                                                            </div>
+                                                        </div>-->
+                            <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.adultTickets}">
+                                <label class="col-2 align-middle" th:text="${'Adult '+(ticketStat.index+1)}"></label>
+                                <div class="col-5">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{adultTickets[__${ticketStat.index}__].firstname}" placeholder="First name" required>
+                                </div>
+                                <div class="col-5">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{adultTickets[__${ticketStat.index}__].lastname}" placeholder="Last name" required>
+                                </div>
+                            </div>
+                            <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.childrenTickets}">
+                                <label class="col-2 align-middle" th:text="${(bookingInfo?.childrenTickets[__${ticketStat.index}__].ageRank==0?'Adult ':bookingInfo?.childrenTickets[__${ticketStat.index}__].ageRank==1?'Child ':'Infant ')+(ticketStat.index+1)}"></label>
+                                <div class="col-5">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{childrenTickets[__${ticketStat.index}__].firstname}" placeholder="First name" required>
+                                </div>
+                                <div class="col-5">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{childrenTickets[__${ticketStat.index}__].lastname}" placeholder="Last name" required>
+                                </div>
+                                <input type="hidden" th:field="*{childrenTickets[__${ticketStat.index}__].lastname}" placeholder="Last name">
+                            </div>
+                            <div class="form-group row form-row border-dark" th:each="ticket, ticketStat : ${bookingInfo?.infantTickets}">
+                                <label class="col-2 align-middle" th:text="${'Infant '+(ticketStat.index+1)}"></label>
+                                <div class="col-5">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{infantTickets[__${ticketStat.index}__].firstname}" placeholder="First name" required>
+                                </div>
+                                <div class="col-5">
+                                    <input type="text" class="form-control-sm align-middle" th:field="*{infantTickets[__${ticketStat.index}__].lastname}" placeholder="Last name" required>
+                                </div>
+                            </div>
+                            <div class="form-group row form-row">   
+                                <button type="submit" class="col-5 btn btn-info btn-sm" style="position: absolute; left: 50%"><i class="fas fa-save"></i> Complete Order Tickets</button>
+                            </div>   
+                        </form>
+                    </div>
+                </div>
+                <script>
+
+                </script>
+            </div>
+            <div class="container pt-5" style="padding-bottom: 14rem; width: 25%; float: right">
+                <div class="card search-card">
+                    <div class="card-body search-content ">
+                        <div class="col-md-12 order-md-2 mb-4">
+                            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted">Your bill</span>
+                                <!--<span class="badge badge-secondary badge-pill">3</span>-->
+                            </h4>
+                            <h5 class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted">Departing trip</span>
+                            </h5>
+                            <ul class="list-group mb-3">
+                                <div th:switch='${bookingInfo.numOfAdult>0}'>                                    
+                                    <li th:case="true" class="list-group-item d-flex justify-content-between lh-condensed pt-1 pb-1">
+                                        <div>                                        
+                                            <h6 class="my-0">Adult</h6>
+                                            <small class="text-muted" th:text="${'x '+bookingInfo.numOfAdult}"></small>
+                                        </div>
+                                        <span class="text-muted" th:text="${bookingInfo.departingTrip.adultPrice}"></span>
+                                    </li>
+                                </div>
+                                <div th:switch='${bookingInfo.numOfChildren>0}'>                                    
+                                    <li th:case="true" class="list-group-item d-flex justify-content-between lh-condensed  pt-1 pb-1">
+                                        <div>                                        
+                                            <h6 class="my-0">Children</h6>
+                                            <small class="text-muted" th:text="${'x '+bookingInfo.numOfChildren}"></small>
+                                        </div>
+                                        <span class="text-muted" th:text="${bookingInfo.departingTrip.childPrice}"></span>
+                                    </li>
+                                </div>
+                                <div th:switch='${bookingInfo.numOfInfant>0}'>                                    
+                                    <li th:case="true" class="list-group-item d-flex justify-content-between lh-condensed  pt-1 pb-1">
+                                        <div>                                        
+                                            <h6 class="my-0">Infant</h6>
+                                            <small class="text-muted" th:text="${'x '+bookingInfo.numOfInfant}"></small>
+                                        </div>
+                                        <span class="text-muted" th:text="${bookingInfo.departingTrip.infantPrice}"></span>
+                                    </li>
+                                </div>                                
+                                <li class="list-group-item d-flex justify-content-between  pt-1 pb-1">
+                                    <span>Total (COVID)</span>
+                                    <strong th:text='${bookingInfo.departingTrip.adultPrice*bookingInfo.numOfAdult+bookingInfo.departingTrip.childPrice*bookingInfo.numOfChildren+bookingInfo.departingTrip.infantPrice*bookingInfo.numOfInfant}'></strong>
+                                </li>
+                            </ul>
+                            <h5 class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted">Returning trip</span>
+                            </h5>
+                            <ul class="list-group mb-3">
+                                <div th:switch='${bookingInfo.numOfAdult>0}'>                                    
+                                    <li th:case="true" class="list-group-item d-flex justify-content-between lh-condensed  pt-1 pb-1">
+                                        <div>                                        
+                                            <h6 class="my-0">Adult</h6>
+                                            <small class="text-muted" th:text="${'x '+bookingInfo.numOfAdult}"></small>
+                                        </div>
+                                        <span class="text-muted" th:text="${bookingInfo.returningTrip.adultPrice}"></span>
+                                    </li>
+                                </div>
+                                <div th:switch='${bookingInfo.numOfChildren>0}'>                                    
+                                    <li th:case="true" class="list-group-item d-flex justify-content-between lh-condensed  pt-1 pb-1">
+                                        <div>                                        
+                                            <h6 class="my-0">Children</h6>
+                                            <small class="text-muted" th:text="${'x '+bookingInfo.numOfChildren}"></small>
+                                        </div>
+                                        <span class="text-muted" th:text="${bookingInfo.returningTrip.childPrice}"></span>
+                                    </li>
+                                </div>
+                                <div th:switch='${bookingInfo.numOfInfant>0}'>                                    
+                                    <li th:case="true" class="list-group-item d-flex justify-content-between lh-condensed pt-1 pb-1">
+                                        <div>                                        
+                                            <h6 class="my-0">Infant</h6>
+                                            <small class="text-muted" th:text="${'x '+bookingInfo.numOfInfant}"></small>
+                                        </div>
+                                        <span class="text-muted" th:text="${bookingInfo.returningTrip.infantPrice}"></span>
+                                    </li>
+                                </div>                                
+                                <li class="list-group-item d-flex justify-content-between  pt-1 pb-1">
+                                    <span>Total (USD)</span>
+                                    <strong th:text='${bookingInfo.returningTrip.adultPrice*bookingInfo.numOfAdult+bookingInfo.returningTrip.childPrice*bookingInfo.numOfChildren+bookingInfo.returningTrip.infantPrice*bookingInfo.numOfInfant}'></strong>
+                                </li>
+                            </ul>
+                            <h5 class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-danger" th:text="${'Total: '+ (bookingInfo.departingTrip.adultPrice*bookingInfo.numOfAdult+bookingInfo.departingTrip.childPrice*bookingInfo.numOfChildren+bookingInfo.departingTrip.infantPrice*bookingInfo.numOfInfant+bookingInfo.returningTrip.adultPrice*bookingInfo.numOfAdult+bookingInfo.returningTrip.childPrice*bookingInfo.numOfChildren+bookingInfo.returningTrip.infantPrice*bookingInfo.numOfInfant)}"></span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <script>
+
+                </script>
+            </div>
+        </div>
+    </body>    
+</html>

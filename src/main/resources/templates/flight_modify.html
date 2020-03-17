@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+    <head>
+        <meta charset="UTF-8">
+        <title>Flight's Information</title>
+    </head>
+    <body>
+        <div class="container my-5" layout:fragment="content">
+            <h3 th:text="${flightDetail.id==null}?'Add Flight': 'Update Flight'"></h3>
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-md-10">                        
+                        <form action="#" th:action="@{/flight/manage/create}" th:object="${flightDetail}"
+                              method="post" id='form-flight'>
+                            <div class="row">
+                                <div class="form-group col-md-8">
+                                    <label for="code" class="col-form-label">Flight Code</label> 
+                                    <input type="text" th:field="*{code}" class="form-control"
+                                           id="code" placeholder="Code" />
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label for="departure_airport" class="col-form-label">Departure Airport</label> 
+                                    <select th:field="*{departureAirport}" class="form-control" id="departure_airport">
+                                        <option th:each="airport:${airports}" th:value="${airport.id}" th:text="${airport.name + ' ('+ airport.location+')'}"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label for="arrival_airport" class="col-form-label">Arrival Airport</label> 
+                                    <select th:field="*{arrivalAirport}"  class="form-control" id="arrival_airport">
+                                        <option th:each="airport: ${airports}" 
+                                                th:value="${airport.id}" th:text="${airport.name + ' ('+ airport.location+')'}"></option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-8">
+                                    <label for="departure_time" class="col-form-label">Departure Time</label> 
+                                    <input type="datetime-local" th:field="*{departureTime}" class="form-control"
+                                           id="departure_time" placeholder="" th:attr="min=${mindate}"/>
+                                </div>
+
+                                <div class="form-group col-md-8">
+                                    <label for="arrival_time" class="col-form-label">Arrival Time</label> 
+                                    <input type="datetime-local" th:field="*{arrivalTime}" class="form-control" th:attr="min=${mindate}"
+                                           id="arrival_time" placeholder="" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="submit" class="btn btn-primary" value=" Submit ">
+                                </div>
+
+                                <input type="hidden" id="id" th:field="*{id}">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    $("#form-flight").on("submit", function (e) {
+                        var arrival = $("#arrival_airport").children("option:selected").val();
+                        var departure = $("#departure_airport").children("option:selected").val();
+                        if (arrival === departure) {
+                            e.preventDefault();
+                            alert("The departure airport can't be the same as the arrival airport");
+                        }
+                    })
+                })
+            </script>
+        </div>
+    </body>    
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Flights</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="pt-5">
+        <div class="card-body pl-0 pr-0">
+            <div th:switch="${flights}" class="pl-0 pr-0 ml-5 mr-5">
+                <p class="my-5">
+                    <a href="/flight/manage/edit" class="btn btn-info">
+                        <i class="fas fa-paper-plane ml-2"> Add Flight </i></a>
+                </p>
+                <!--                        end button add-->
+                <div class="col-md-12 pl-0 pr-0">
+                    <h2 th:case="null">No record found !!</h2>
+                    <div th:case="*">
+                        <table class="table table-striped table-responsive-md">
+                            <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Departure Airport</th>
+                                <th>Arrival Airport</th>
+                                <th>Departure Time</th>
+                                <th>Arrival Time</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <!--                                    end thead-->
+                            <tbody>
+                            <tr th:each="item : ${flights}">
+                                <td th:text="${item?.code}"></td>
+                                <td th:text="${item?.departureAirport?.name + ' - ' +item?.departureAirport?.location}"></td>
+                                <td th:text="${item?.arrivalAirport?.name + ' - ' +item?.arrivalAirport?.location}"></td>
+                                <td th:text="${item?.departureTime}"></td>
+                                <td th:text="${item?.arrivalTime}"></td>
+                                <!--                                        end basic info-->
+                                <td>
+                                    <a th:href="@{manage/edit/{id}(id=${item.id})}"
+                                       class="btn btn-primary btn-sm">
+                                        <i class="fas fa-pencil-alt"> Edit</i>
+                                    </a>
+                                    <a th:href="@{manage/{id}/seat(id=${item.id})}"
+                                       class="btn btn-primary btn-sm">
+                                        <i class="fas fa-wheelchair"> Manage Seats</i>
+                                    </a>
+                                    <a th:href="@{manage/delete/{id}(id=${item.id})}"
+                                       class="btn btn-danger btn-sm button_delete">
+                                        <i class="fas fa-times"> Delete</i>
+                                    </a>
+                                </td>
+                                <!--                                        end operations-->
+                            </tr>
+                            </tbody>
+                            <!--                                    end tbody-->
+                        </table>
+                        <!--                                end table-->
+                        <nav aria-label="Pagination" th:if="${flights.totalPages gt 0}">
+                            <ul class="pagination justify-content-center font-weight-bold">
+                                <li class="page-item" th:classappend="${flights.number eq 0} ? 'disabled'">
+                                    <a class="page-link"
+                                       th:href="@{/flight/manage?page={id}(id=${flights.number lt 2 ? 1 : flights.number})}"
+                                       aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item" th:classappend="${i eq flights.number + 1} ? 'active'"
+                                    th:each="i : ${#numbers.sequence( 1, flights.totalPages, 1)}">
+                                    <a class="page-link" th:href="@{/flight/manage?page={id}(id=${i})}"
+                                       th:text="${i}"
+                                       th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+                                </li>
+                                <!--                                        <li class="page-item" th:classappend="${i eq flights.number + 1} ? 'active'"-->
+                                <!--                                            th:each="i : ${#numbers.sequence( flights.number + 1, flights.totalPages > 10 + flights.number ? flights.number + 10 : flights.totalPages, 1)}">-->
+                                <!--                                            <a class="page-link" th:href="@{/airport/manage?page={id}(id=${i})}" th:text="${i}"-->
+                                <!--                                               th:title="${'Page '+ i}"-->
+                                <!--                                               rel="tooltip"></a>-->
+                                <!--                                        </li>-->
+                                <!--                                        <li class="page-item disabled" th:if="${flights.number + 10 < flights.totalPages}">-->
+                                <!--                                            <a class="page-link svg-icon" href="#">-->
+                                <!--                                                <span data-feather="more-horizontal" width="20" height="20"></span>-->
+                                <!--                                            </a>-->
+                                <!--                                        </li>-->
+                                <li class="page-item"
+                                    th:classappend="${flights.number + 1 eq flights.totalPages} ? 'disabled'">
+                                    <a class="page-link"
+                                       th:href="@{/flight/manage?page={id}(id=${flights.number + 2})}"
+                                       aria-label="Next" title="Next Page" data-toggle="tooltip">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!--                                end pagination-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

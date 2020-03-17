@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <title>Booking - Search Flight</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="container mt-5 pt-5 pb-5" style="margin-bottom: 20rem">
+                <div class="card search-card">
+                    <div class="card-body search-content">
+                        <div class="row row-spacing" ><h5 class="card-title col">Search for suitable flights</h5></div>
+                        <form action="#" th:action="@{/booking/select/flight}" th:object="${bookingInfo}"
+                              method="post" id='form-flight-search'>
+                            <div class="row row-spacing">
+                                <div class="col col-2">
+                                    <select class="form-control" th:field="*{roundticket}" id="return_type">
+                                        <option th:value="1" checked>Round Trip</option>
+                                        <option th:value="0">One way</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row row-spacing">
+                                <div class="col col-4">
+                                    <label for="departureLocation">From: </label>
+                                    <div>
+                                        <select th:field="*{departureLocation}"  class="form-control" id="depatureLocation">
+                                            <option th:each="location: ${locations}" 
+                                                    th:value="${location}" th:text="${location}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col col-4">
+                                    <label for="arrivalLocation">To: </label>
+                                    <div>
+                                        <select th:field="*{arrivalLocation}"  class="form-control" id="arrivalLocation">
+                                            <option th:each="location: ${locations}" 
+                                                    th:value="${location}" th:text="${location}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col col-4">
+                                    <label>Number of passengers: </label><br/>
+                                    <div class='row'>                                        
+                                        <div class='col-4'>
+                                            <label for='numOfAdult'>Adult</label><br/>
+                                            <input type='number' min='0' class="form-control" th:field="*{numOfAdult}" id='numOfAdult'/>
+                                        </div>
+                                        <div class='col-4'>
+                                            <label for='numOfChildren'>Children</label><br/>
+                                            <input type='number' min='0' class="form-control" th:field="*{numOfChildren}" id='numOfChildren'/>
+                                        </div>
+                                        <div class='col-4'>
+                                            <label for='numOfInfant'>Infant</label><br/>
+                                            <input type='number' min='0' class="form-control" th:field="*{numOfInfant}" id='numOfInfant'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-spacing">
+                                <div class="col col-4">
+                                    <label for="">Departure Date: </label>
+                                    <input th:field="*{departureDate}" type="date" class="form-control" id="departure_date" />
+                                </div>
+                                <div class="col col-4">
+                                    <label for="">Return Date: </label>
+                                    <input th:field="*{returnDate}" type="date" class="form-control" id="return_date" />
+                                </div>
+                                <div class="col col-4"><label></label>
+                                    <button class="btn btn-primary form-control btn-search-flight align-bottom" type="submit"><i class="fas fa-search"></i> Search flights</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <script>
+                    function formatDate(date) {
+                        var dd = date.getDate();
+                        var mm = date.getMonth() + 1;
+                        var yyyy = date.getFullYear();
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm
+                        }
+                        var today = yyyy + '-' + mm + '-' + dd;
+                        return today;
+                    }
+
+                    $(document).ready(function () {
+                        var today = formatDate(new Date());
+                        $('#departure_date').val(today);
+                        $('#return_date').val(today);
+                        $("#departure_date").attr("min", today);
+                        $("#return_date").attr("min", today);
+
+                        $("#departure_date").change(function () {
+                            var departure_date = $(this).val();
+                            var return_date = $("#return_date").val();
+                            if (departure_date > return_date) {
+                                $('#return_date').val(departure_date);
+                            }
+                            $("#return_date").attr("min", departure_date);
+                        });
+
+                        $("#return_type").on("change", function () {
+                            var returnTypeValue = $(this).val();
+                            if (returnTypeValue == 0) {
+                                $("#return_date").attr("disabled", true);
+                            } else {
+                                $("#return_date").attr("disabled", false);
+                            }
+                        })
+                    })
+                </script>
+            </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script>
+
+    </script>
+</html>

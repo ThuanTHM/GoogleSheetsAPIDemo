@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <title>Booking - Search Flight</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="container pt-5" style="padding-bottom: 13rem">
+                <div class="card search-card">
+                    <div class="card-body search-content" th:switch="${bookingInfo?.roundticket}">
+                        <form action="#" th:action="@{/booking/order/contact}" th:object="${bookingInfo}"
+                              method="post" id='form-flight-search'>
+                            <input type='hidden' th:field="*{departureLocation}"/>                            
+                            <input type='hidden' th:field="*{arrivalLocation}"/>                            
+                            <input type='hidden' th:field="*{numOfAdult}"/>                            
+                            <input type='hidden' th:field="*{numOfChildren}"/>                            
+                            <input type='hidden' th:field="*{numOfInfant}"/>                            
+                            <input type='hidden' th:field="*{departureDate}"/>                            
+                            <input type='hidden' th:field="*{returnDate}"/>                            
+                            <div class="row row-spacing">   
+                                <a th:href="@{/booking}"
+                                   class="btn btn-info btn-sm">
+                                    <i class="fas fa-backward"></i> Return to search flights
+                                </a>
+                                <button  type="submit" class="btn_submit btn btn-info btn-sm" style="visibility: hidden; position: absolute; left: 82%">Filling Order Tickets <i class="fas fa-forward"></i></button>
+                            </div> 
+                            <div class="card-title"><h5>Departing flight</h5>
+                                <h6 th:text="${bookingInfo.departureLocation + ' to ' + bookingInfo.arrivalLocation}"></h6>
+                                <h6 th:text="${#dates.format(new java.util.Date(bookingInfo.departureDate),'dd-MM-yyyy')}"></h6></div>
+                            <div class="row row-spacing">
+                                <table class="table table-striped table-responsive-md">
+                                    <tbody>
+                                        <tr th:each="item : ${departingSeats}" class="border border-dark" style="cursor: pointer" th:onclick="'javascript:selectRow(\''+${item.id}+'\',1);'">
+                                            <td><br/><input type="radio" th:field="*{departingTrip.id}" th:value="${item.id}" th:id="${item.id+'_radio'}"/></td>
+                                            <td><p class='mb-0' th:text="${#dates.format(new java.util.Date(item?.flight?.departureTime),'hh:mm')}"/><p th:text="${item?.flight?.departureAirport?.name + ' - ' + item?.flight?.departureAirport?.location}"/></td>
+                                            <td><br/><i class="fas fa-plane"></i></td>
+                                            <td><p class='mb-0' th:text="${#dates.format(new java.util.Date(item?.flight?.arrivalTime),'hh:mm')}"/><p th:text="${item?.flight?.arrivalAirport?.name + ' - ' + item?.flight?.arrivalAirport?.location}"/></td>
+                                            <th class="pt-4" th:text="${item?.flight?.code}"></th>
+                                            <td><p class='mb-0' th:text="${'Adult: ' + item?.adultPrice + ' (VND)'}"/><p class='mb-0' th:text="${'Children: ' + item?.childPrice + ' (VND)'}"/><p class='mb-0' th:text="${'Infant: ' + item?.infantPrice + ' (VND)'}"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                                
+                                <!--                                    end departing flight table-->
+                            </div>
+                            <div th:case="true">
+                                <div class="card-title">
+                                    <h5>Returning flight</h5>
+                                    <h6 th:text="${bookingInfo.arrivalLocation + ' to ' + bookingInfo.departureLocation}"></h6>
+                                    <h6 th:text="${#dates.format(new java.util.Date(bookingInfo.returnDate),'dd-MM-yyyy')}"></h6></div>
+                                <div class="row row-spacing">
+                                    <table class="table table-striped table-responsive-md">
+                                        <tbody>
+                                            <tr th:each="item : ${returningSeats}" class="border border-dark" style="cursor: pointer" th:onclick="'javascript:selectRow(\''+${item.id}+'\',0);'">
+                                                <td><br/><input type="radio" th:field="*{returningTrip.id}" th:value="${item.id}" th:id="${item.id+'_radio'}" /></td>
+                                                <td><p class='mb-0' th:text="${#dates.format(new java.util.Date(item?.flight?.departureTime),'hh:mm')}"/><p class='mb-0' th:text="${item?.flight?.departureAirport?.name + ' - ' + item?.flight?.departureAirport?.location}"/></td>
+                                                <td><br/><i class="fas fa-plane"></i></td>
+                                                <td><p class='mb-0' th:text="${#dates.format(new java.util.Date(item?.flight?.arrivalTime),'hh:mm')}"/><p th:text="${item?.flight?.arrivalAirport?.name + ' - ' + item?.flight?.arrivalAirport?.location}"/></td>
+                                                <th class="pt-4" th:text="${item?.flight?.code}"></th>
+                                                <td><p class='mb-0' th:text="${'Adult: ' + item?.adultPrice + ' (VND)'}"/><p class='mb-0' th:text="${'Children: ' + item?.childPrice + ' (VND)'}"/><p class='mb-0' th:text="${'Infant: ' + item?.infantPrice + ' (VND)'}"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>                                
+                                    <!--                                    end returning flight table-->
+                                </div>       
+                            </div>
+                            <div class="row row-spacing">   
+                                <a th:href="@{/booking}"
+                                   class="btn btn-info btn-sm">
+                                    <i class="fas fa-backward"></i> Return to search flights
+                                </a>
+                                <button type="submit" class="btn_submit btn btn-info btn-sm" style="display: none; position: absolute; left: 82%">Filling Order Tickets <i class="fas fa-forward"></i></button>
+                            </div>   
+                        </form>
+                    </div>
+                </div>
+                <script>
+                    var departingSelected = 0;
+                            var roundticket = [[${bookingInfo?.roundticket
+                            }
+                            ]];
+                    var returningSelected = 0;
+                    function selectRow(id, isDepartingRow) {
+                        $("#" + id + "_radio").prop('checked', true);
+                        var btns = document.getElementsByClassName('btn_submit');
+                        if (isDepartingRow == 1) {
+                            departingSelected = 1;
+                        } else {
+                            returningSelected = 1;
+                        }
+                        if ((roundticket && departingSelected === 1 && returningSelected === 1) || !roundticket) {
+                            for (let item of btns) {
+                                item.setAttribute('style', 'visibility: visible; position: absolute; left: 82%');
+                            }
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </body>    
+</html>

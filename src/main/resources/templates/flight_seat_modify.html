@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+    <head>
+        <meta charset="UTF-8">
+        <title>Seat's Infomation</title>
+    </head>
+    <body>
+        <div class="container my-5" layout:fragment="content">
+            <h3 th:text="${seatDetail.id==null}?'Add Seat': 'Update Seat'"></h3>
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-md-10">
+                        <form action="#" th:action="@{/flight/manage/seat/create}" th:object="${seatDetail}"
+                              method="post" id='form-seat'>
+                            <div class="row">
+                                <div class="form-group col-md-8">
+                                    <label for="seatRank" class="col-form-label">Seat rank</label> 
+                                    <input type="number" th:field="*{seatRank}" class="form-control" th:attr="min=1, max=4"
+                                           id="seatRank" />
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label for="totalNum" class="col-form-label">Total number of seats</label> 
+                                    <input type="number" th:field="*{totalNum}" class="form-control" th:attr="min=1"
+                                           id="seatRank" />
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label for="adultPrice" class="col-form-label">Adult Price</label> 
+                                    <input type="number" th:field="*{adultPrice}" class="form-control" th:attr="min=1"
+                                           id="adultPrice" />
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label for="childPrice" class="col-form-label">Child Price</label> 
+                                    <input type="number" th:field="*{childPrice}" class="form-control" th:attr="min=1"
+                                           id="childPrice" />
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label for="infantPrice" class="col-form-label">Infant Price</label> 
+                                    <input type="number" th:field="*{infantPrice}" class="form-control" th:attr="min=1"
+                                           id="infantPrice" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="submit" class="btn btn-primary" value=" Submit ">
+                                </div>
+
+                                <input type="hidden" id="id" th:field="*{id}">
+                                <input type="hidden" id="flight" th:field="*{flight}">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <script>
+            </script>
+        </div>
+    </body>    
+</html>
