@@ -18,7 +18,7 @@ import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.training.apidemo.utils.SpreadsheetSnippets;
+import com.training.apidemo.snippets.SpreadsheetSnippets;
 
 import java.io.*;
 import java.security.GeneralSecurityException;

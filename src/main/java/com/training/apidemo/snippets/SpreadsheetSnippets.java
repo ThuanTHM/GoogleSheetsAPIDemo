@@ -1,4 +1,4 @@
-package com.training.apidemo.utils;
+package com.training.apidemo.snippets;
 //<editor-fold desc="Import">
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.*;
@@ -145,24 +145,26 @@ public class SpreadsheetSnippets {
     }
 
     public AppendValuesResponse appendValues(String spreadsheetId, String range,
-                                             String valueInputOption, List<List<Object>> _values)
+                                             String valueInputOption, List<List<Object>> values)
             throws IOException {
         Sheets service = this.service;
         // [START sheets_append_values]
-        List<List<Object>> values = Arrays.asList(
-                Arrays.asList(
-                        // Cell values ...
-                )
-                // Additional rows ...
-        );
+//        List<List<Object>> values = Arrays.asList(
+//                Arrays.asList(
+//                        // Cell values ...
+//                )
+//                // Additional rows ...
+//        );
         // [START_EXCLUDE silent]
-        values = _values;
+//        values = _values;
         // [END_EXCLUDE]
         ValueRange body = new ValueRange()
                 .setValues(values);
         AppendValuesResponse result =
                 service.spreadsheets().values().append(spreadsheetId, range, body)
                         .setValueInputOption(valueInputOption)
+//                        .setInsertDataOption("INSERT_ROWS")
+//                        .setIncludeValuesInResponse(true)
                         .execute();
         System.out.printf("%d cells appended.", result.getUpdates().getUpdatedCells());
         // [END sheets_append_values]
@@ -312,6 +314,19 @@ public class SpreadsheetSnippets {
         return batchRequests(spreadsheetId, reqs);
     }
 
+//    public BatchUpdateSpreadsheetResponse batchDeleteRowRequest(String spreadsheetId, String[] titles)
+//            throws IOException {
+//        List<Request> reqs = new ArrayList<>();
+//        DeleteDimensionRequest req = new DeleteDimensionRequest()
+//        AddSheetRequest req = new AddSheetRequest();
+//        for(String title: titles){
+//            req.setProperties(new SheetProperties());
+//            req.getProperties().setTitle(title);
+//            reqs.add(new Request().setAddSheet(req));
+//        }
+//        // [END sheets_batch_update]
+//        return batchRequests(spreadsheetId, reqs);
+//    }
 
     public BatchUpdateSpreadsheetResponse batchRequests(String spreadsheetId, List<Request> requests)
             throws IOException {

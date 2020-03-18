@@ -43,5 +43,7 @@ dependencies {
     compile 'com.google.api-client:google-api-client:1.30.4'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.30.4'
     compile 'com.google.apis:google-api-services-sheets:v4-rev581-1.25.0'
+    // https://mvnrepository.com/artifact/com.google.apis/google-api-services-drive
+    compile group: 'com.google.apis', name: 'google-api-services-drive', version: 'v3-rev196-1.25.0'
     compile group: 'com.google.auth', name: 'google-auth-library-oauth2-http', version: '0.20.0'
 }

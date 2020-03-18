@@ -59,7 +59,7 @@ public class AirportController {
     }
 
     @RequestMapping(path = "/manage/create", method = RequestMethod.POST) // Map ONLY POST Requests
-    public String addNewUser(@ModelAttribute Airport airportDetail) {
+    public String modifyAirport(@ModelAttribute Airport airportDetail) {
 
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
