@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 //</editor-fold>
 
-@ControllerAdvice
 @Controller
 @RequestMapping(path = "/airport")
 public class AirportController {

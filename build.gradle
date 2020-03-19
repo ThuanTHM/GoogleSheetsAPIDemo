@@ -16,34 +16,39 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: '2.2.5.RELEASE', ext: 'pom'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: '2.2.5.RELEASE', ext: 'pom'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.2.5.RELEASE'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.2.5.RELEASE'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.5.RELEASE'
+    testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: '5.3.0.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.5.RELEASE'
+    testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.5.RELEASE') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.2.5.RELEASE'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.2.5.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.2.5.RELEASE'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.2.5.RELEASE'
     // https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
-    compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.4.1'
+    implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.4.1'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
-    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.2.5.RELEASE'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.2.5.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework/spring-context
-    compile group: 'org.springframework', name: 'spring-context', version: '5.2.4.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-context', version: '5.2.4.RELEASE'
     // https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
-    compile group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+    implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.19'
-    compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.2.5.RELEASE', ext: 'pom'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.19'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.2.5.RELEASE', ext: 'pom'
     // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
-    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.4.0-b180830.0359'
-    compile 'com.google.api-client:google-api-client:1.30.4'
-    compile 'com.google.oauth-client:google-oauth-client-jetty:1.30.4'
-    compile 'com.google.apis:google-api-services-sheets:v4-rev581-1.25.0'
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.4.0-b180830.0359'
+    implementation 'com.google.api-client:google-api-client:1.30.4'
+    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.30.4'
+    implementation 'com.google.apis:google-api-services-sheets:v4-rev581-1.25.0'
     // https://mvnrepository.com/artifact/com.google.apis/google-api-services-drive
-    compile group: 'com.google.apis', name: 'google-api-services-drive', version: 'v3-rev196-1.25.0'
-    compile group: 'com.google.auth', name: 'google-auth-library-oauth2-http', version: '0.20.0'
+    implementation group: 'com.google.apis', name: 'google-api-services-drive', version: 'v3-rev196-1.25.0'
+    implementation group: 'com.google.auth', name: 'google-auth-library-oauth2-http', version: '0.20.0'
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Airport's Infomation</title>
+</head>
+<body>
+<div layout:fragment="content" class="container my-5">
+    <form th:action="@{/registration}" method="get">
+        <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>
+    </form>
+
+    <div class="container">
+        <form th:action="@{/login}" method="POST" class="form-signin">
+            <h3 class="form-signin-heading" th:text="Login"></h3>
+            <br/>
+
+            <input type="text" id="user_name" name="user_name" placeholder="User Name"
+                   class="form-control"/> <br/>
+            <input type="password" th:placeholder="Password"
+                   id="password" name="password" class="form-control"/> <br/>
+
+            <div align="center" th:if="${param.error}">
+                <p style="font-size: 20; color: #FF1C19;">User Name or Password invalid, please verify</p>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit"
+                    th:text="Login"></button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

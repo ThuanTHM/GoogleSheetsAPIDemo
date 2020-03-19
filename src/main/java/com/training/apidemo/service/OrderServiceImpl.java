@@ -5,20 +5,22 @@ import com.training.apidemo.exception.RecordNotFoundException;
 import com.training.apidemo.jpa.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Logger;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 @Service("orderService")
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
     static Logger logger = Logger.getLogger(OrderServiceImpl.class.getName());
 
     @Autowired
     private OrderRepository orderRepository;
 
-    public Order save(Order order){
+    public Order save(Order order) {
         return orderRepository.save(order);
     }
 
