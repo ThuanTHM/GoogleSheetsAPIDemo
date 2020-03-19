@@ -1,13 +1,18 @@
 package com.training.apidemo.snippets;
 //<editor-fold desc="Import">
+
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.*;
 import com.google.common.collect.Lists;
+import com.training.apidemo.service.AirportServiceImpl;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 //</editor-fold>
 
 public class SpreadsheetSnippets {
@@ -88,6 +93,7 @@ public class SpreadsheetSnippets {
         // [END sheets_batch_get_values]
         return result;
     }
+
     public UpdateValuesResponse updateValues(String spreadsheetId, String range,
                                              String valueInputOption, List<List<Object>> _values)
             throws IOException {
@@ -305,7 +311,7 @@ public class SpreadsheetSnippets {
             throws IOException {
         List<Request> reqs = new ArrayList<>();
         AddSheetRequest req = new AddSheetRequest();
-        for(String title: titles){
+        for (String title : titles) {
             req.setProperties(new SheetProperties());
             req.getProperties().setTitle(title);
             reqs.add(new Request().setAddSheet(req));
@@ -314,19 +320,17 @@ public class SpreadsheetSnippets {
         return batchRequests(spreadsheetId, reqs);
     }
 
-//    public BatchUpdateSpreadsheetResponse batchDeleteRowRequest(String spreadsheetId, String[] titles)
-//            throws IOException {
-//        List<Request> reqs = new ArrayList<>();
-//        DeleteDimensionRequest req = new DeleteDimensionRequest()
-//        AddSheetRequest req = new AddSheetRequest();
-//        for(String title: titles){
-//            req.setProperties(new SheetProperties());
-//            req.getProperties().setTitle(title);
-//            reqs.add(new Request().setAddSheet(req));
-//        }
-//        // [END sheets_batch_update]
-//        return batchRequests(spreadsheetId, reqs);
-//    }
+    public BatchUpdateSpreadsheetResponse batchDeleteDimensionRequest(String spreadsheetId, List<DimensionRange> dimensionRanges)
+            throws IOException {
+        List<Request> reqs = new ArrayList<>();
+        DeleteDimensionRequest req = new DeleteDimensionRequest();
+        for (DimensionRange dimensionRange : dimensionRanges) {
+            req.setRange(dimensionRange);
+            reqs.add(new Request().setDeleteDimension(req));
+        }
+        // [END sheets_batch_update]
+        return batchRequests(spreadsheetId, reqs);
+    }
 
     public BatchUpdateSpreadsheetResponse batchRequests(String spreadsheetId, List<Request> requests)
             throws IOException {
@@ -336,5 +340,25 @@ public class SpreadsheetSnippets {
                 service.spreadsheets().batchUpdate(spreadsheetId, body).execute();
         // [END sheets_batch_update]
         return response;
+    }
+
+    public Integer getSheetIdByTitle(String spreadsheetId, String title) throws IOException {
+        for(Sheet sheet:service.spreadsheets().get(spreadsheetId).execute().getSheets()){
+            if (sheet.getProperties().getTitle().equals(title)) {
+                return sheet.getProperties().getSheetId();
+            }
+        }
+        return null;
+    }
+
+    public List<List<Object>> getValueRange(String spreadsheetId, String searchRange) {
+        try {
+            return service.spreadsheets().values()
+                    .get(spreadsheetId, searchRange)
+                    .execute().getValues();
+        } catch (IOException ex) {
+            Logger.getLogger(AirportServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return Arrays.asList(Arrays.asList());
+        }
     }
 }
