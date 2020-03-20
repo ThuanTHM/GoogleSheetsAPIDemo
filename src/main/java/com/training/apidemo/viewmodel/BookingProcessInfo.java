@@ -5,12 +5,14 @@
  */
 package com.training.apidemo.viewmodel;
 
+//<editor-fold desc="Import">
 import com.training.apidemo.entity.Seat;
 import com.training.apidemo.entity.Ticket;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
+//</editor-fold>
 
 /**
  *

@@ -1,11 +1,13 @@
 package com.training.apidemo.viewmodel;
 
+//<editor-fold desc="Import">
 import com.training.apidemo.entity.Airport;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.sql.Date;
+//</editor-fold>
 
 public class FlightForm {
     private String departureDatetimeLocalString;

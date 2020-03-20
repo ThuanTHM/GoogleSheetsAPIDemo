@@ -5,11 +5,10 @@
  */
 package com.training.apidemo.entity;
 
-//import com.training.apidemo.viewmodel.TargetView;
-//import com.fasterxml.jackson.annotation.JsonView;
-
+//<editor-fold desc="Import">
 import java.math.BigDecimal;
 import javax.persistence.*;
+//</editor-fold>
 
 /**
  * @author FB-001

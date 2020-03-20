@@ -25,7 +25,7 @@ import org.springframework.stereotype.Controller;
 //</editor-fold>
 
 @Controller
-@RequestMapping(path = {"booking"})
+@RequestMapping(path = {"booking",""})
 public class BookingController {
 
     @Autowired

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header">
@@ -12,16 +12,21 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item" th:classappend="${#request.requestURI == '/flight/manage' ? 'active' : ''}">                
+            <li class="nav-item" th:classappend="${#request.requestURI == '/flight/manage' ? 'active' : ''}">
                 <a class="nav-link" href="/flight/manage">Flight</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:classappend="${#request.requestURI == '/airport/manage' ? 'active' : ''}" href="/airport/manage">Airport</a>
             </li>
         </ul>
-        <ul class="navbar-nav navbar-right">
-            <li><a href="/registration"><i class="fas fa-user-plus"></i> Sign Up</a></li>
-            <li><a href="/login"><i class="fas fa-user"></i> Sign in</a></li>
+        <ul class="navbar-nav navbar-right" sec:authorize="isAnonymous()">>
+            <li class="nav-item"><a class="nav-link" href="/registration"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+            <li class="nav-item"><a class="nav-link" href="/login"><i class="fas fa-user"></i> Sign in</a></li>
+        </ul>
+        <ul class="navbar-nav navbar-right" sec:authorize="isAuthenticated()">
+<!--            <li class="nav-item"><a class="nav-link" href="#">Logged user: <span sec:authentication="name"></span></a></li>-->
+<!--            <li class="nav-item">Roles: <span sec:authentication="principal.authorities"></span></li>-->
+            <li class="nav-item"><a class="nav-link" href="/logout"><i class="fas fa-user"></i> Sign out</a></li>
         </ul>
     </div>
 </nav>

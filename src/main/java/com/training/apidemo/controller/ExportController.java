@@ -31,18 +31,18 @@ import java.util.List;
 @Controller
 @RequestMapping(path = "/export")
 public class ExportController {
-
     //<editor-fold desc="Service">
     @Autowired
     private AirportService airportService;
     //</editor-fold>
 
     //<editor-fold desc="Constant">
-    private static final String ID_DEMOSHIT = "https://docs.google.com/spreadsheets/d/16ev_ShmFs3NqaBEzi51WeZuXVP_rkbQEnHRpRpKyxW4";
+    private static final String ID_DEMOSHIT = "16ev_ShmFs3NqaBEzi51WeZuXVP_rkbQEnHRpRpKyxW4";
+    private static final String SHITNAME = "ListAirports";
     //</editor-fold>
 
     //<editor-fold desc="Global Instance">
-    /**
+    /*
      * Global instance of the scopes required by this quickstart.
      * If modifying these scopes, delete your previously saved tokens/ folder.
      */
@@ -52,24 +52,14 @@ public class ExportController {
     @RequestMapping(path = "/airport")
     public ResponseEntity<Object> exportAirport() throws URISyntaxException, IOException, GeneralSecurityException {
         // Build a new authorized API client service.
-        final String range = "ListAirports!A2:C";
-//        Drive drive = new DriveUtils().driveServiceAccount();
-//        File fileMetadata = new File();
-//        fileMetadata.setName("ListAirports");
-//        fileMetadata.setDescription("ListAirports");
-//        fileMetadata.setMimeType("application/vnd.google-apps.spreadsheet");
-//        File file = drive.files().create(fileMetadata).setFields("id").execute();
+        final String range = SHITNAME+"!A2:C";
         SpreadsheetSnippets snippets = new SpreadsheetSnippets(new SpreadsheetUtils().spreadsheetsAuth2_0());
-        String spreadsheetId = "16ev_ShmFs3NqaBEzi51WeZuXVP_rkbQEnHRpRpKyxW4";
-//        String spreadsheetId = file.getId();
         List<List<Object>> values = new ArrayList<>();
         airportService.findAll().forEach(airport -> {
             values.add(airport.toList());
         });
-//        BatchUpdateSpreadsheetResponse response1 = snippets.batchAddSheetsRequest(spreadsheetId, new String[]{"Airports"});
-        UpdateValuesResponse response2 = snippets.updateValues(spreadsheetId, range, "RAW", values);
-//        URI demoshit = new URI("https://docs.google.com/spreadsheets/d/"+ID_DEMOSHIT);
-        URI demoshit = new URI("https://docs.google.com/spreadsheets/d/" + spreadsheetId);
+        UpdateValuesResponse response2 = snippets.updateValues(ID_DEMOSHIT, range, "RAW", values);
+        URI demoshit = new URI("https://docs.google.com/spreadsheets/d/" + ID_DEMOSHIT);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(demoshit);
         return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);

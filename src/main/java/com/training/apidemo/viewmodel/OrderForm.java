@@ -1,9 +1,11 @@
 package com.training.apidemo.viewmodel;
 
+//<editor-fold desc="Import">
 import com.training.apidemo.entity.Airport;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.sql.Timestamp;
+//</editor-fold>
 
 public class OrderForm {
     private int isReturnTrip;

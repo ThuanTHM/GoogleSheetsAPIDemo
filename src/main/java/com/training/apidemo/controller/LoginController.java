@@ -16,9 +16,7 @@ import javax.validation.Valid;
 //</editor-fold>
 
 @Controller
-@RequestMapping("")
 public class LoginController {
-//
     @Autowired
     private UserService userService;
 
@@ -29,7 +27,6 @@ public class LoginController {
         return modelAndView;
     }
 
-
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
@@ -38,7 +35,7 @@ public class LoginController {
         modelAndView.setViewName("registration");
         return modelAndView;
     }
-//
+
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();

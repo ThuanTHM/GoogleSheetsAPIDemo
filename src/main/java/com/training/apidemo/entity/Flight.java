@@ -8,6 +8,7 @@ package com.training.apidemo.entity;
 import java.util.Date;
 import java.util.Collection;
 import javax.persistence.*;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,9 +22,7 @@ public class Flight {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-
     private String code;
-    
     private Date departureTime;
     private Date arrivalTime;
     private Airport departureAirport;
@@ -57,7 +56,7 @@ public class Flight {
     }
 
     public Flight() {
-        
+
     }
 
     public Flight(Date departureTime, Date arrivalTime) {
@@ -81,11 +80,11 @@ public class Flight {
     public String getCode() {
         return code;
     }
-//    @JsonView({TargetView.flightView.class, TargetView.orderView.class})
+
     public void setCode(String code) {
         this.code = code;
     }
-    
+
     @Basic
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "departure_time", nullable = false)
