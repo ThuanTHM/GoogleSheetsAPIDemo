@@ -7,8 +7,10 @@ import org.springframework.data.domain.PageRequest;
 
 import java.util.Collection;
 import java.util.Date;
-import org.springframework.transaction.UnexpectedRollbackException;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.UnexpectedRollbackException;
+@Service
 public interface SeatService {
     Collection<Seat> findAll();
     Page<Seat> findAll(PageRequest p);

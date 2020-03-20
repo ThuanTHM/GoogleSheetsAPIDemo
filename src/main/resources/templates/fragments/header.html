@@ -13,11 +13,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" th:classappend="${#request.requestURI == '/flight/manage' ? 'active' : ''}">                
-                <a class="nav-link" href="admin/flight/manage">Flight</a>
+                <a class="nav-link" href="/flight/manage">Flight</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:classappend="${#request.requestURI == 'admin/airport/manage' ? 'active' : ''}" href="/airport/manage">Airport</a>
+                <a class="nav-link" th:classappend="${#request.requestURI == '/airport/manage' ? 'active' : ''}" href="/airport/manage">Airport</a>
             </li>
+        </ul>
+        <ul class="navbar-nav navbar-right">
+            <li><a href="/registration"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+            <li><a href="/login"><i class="fas fa-user"></i> Sign in</a></li>
         </ul>
     </div>
 </nav>

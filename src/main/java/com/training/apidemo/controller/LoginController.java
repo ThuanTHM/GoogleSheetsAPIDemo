@@ -16,8 +16,9 @@ import javax.validation.Valid;
 //</editor-fold>
 
 @Controller
+@RequestMapping("")
 public class LoginController {
-
+//
     @Autowired
     private UserService userService;
 
@@ -37,14 +38,14 @@ public class LoginController {
         modelAndView.setViewName("registration");
         return modelAndView;
     }
-
+//
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findByUserName(user.getUsername());
         if (userExists != null) {
             bindingResult
-                    .rejectValue("userName", "error.user",
+                    .rejectValue("username", "error.user",
                             "There is already a user registered with the user name provided");
         }
         if (bindingResult.hasErrors()) {
@@ -64,9 +65,9 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByUserName(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getUsername() + "/" + user.getFirstname() + " " + user.getLastname() + " (" + user.getEmail() + ")");
+        modelAndView.addObject("username", "Welcome " + user.getUsername() + "/" + user.getFirstname() + " " + user.getLastname() + " (" + user.getEmail() + ")");
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("admin/home");
+        modelAndView.setViewName("redirect:/airport/manage");
         return modelAndView;
     }
 }

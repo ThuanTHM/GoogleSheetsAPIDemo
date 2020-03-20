@@ -21,12 +21,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
-    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
@@ -41,13 +35,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/booking").permitAll()
+                .antMatchers("/airport").permitAll()
+                .antMatchers("/flight").permitAll()
+                .antMatchers("/seat").permitAll()
+                .antMatchers("/export").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/airport/**").hasAuthority("ADMIN")
-                .antMatchers("/flight/**").hasAuthority("ADMIN")
-                .antMatchers("/seat/**").hasAuthority("ADMIN")
-                .antMatchers("/export/**").hasAuthority("ADMIN")
-                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
+//                .antMatchers("/airport/*").access("hasAuthority('ADMIN')")
+//                .antMatchers("/flight/**").access("hasAuthority('ADMIN')")
+//                .antMatchers("/seat/**").access("hasAuthority('ADMIN')")
+//                .antMatchers("/export/**").access("hasAuthority('ADMIN')")
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
                 .defaultSuccessUrl("/admin/home")
