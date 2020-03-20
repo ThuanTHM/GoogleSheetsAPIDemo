@@ -1,5 +1,6 @@
 package com.training.apidemo.config;
 
+//<editor-fold desc="Import">
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+//</editor-fold>
 
 @Configuration
 @EnableWebSecurity
@@ -41,10 +43,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/export").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
-//                .antMatchers("/airport/*").access("hasAuthority('ADMIN')")
-//                .antMatchers("/flight/**").access("hasAuthority('ADMIN')")
-//                .antMatchers("/seat/**").access("hasAuthority('ADMIN')")
-//                .antMatchers("/export/**").access("hasAuthority('ADMIN')")
+                .antMatchers("/airport/**").access("hasAuthority('ADMIN')")
+                .antMatchers("/flight/**").access("hasAuthority('ADMIN')")
+                .antMatchers("/seat/**").access("hasAuthority('ADMIN')")
+                .antMatchers("/export/**").access("hasAuthority('ADMIN')")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
